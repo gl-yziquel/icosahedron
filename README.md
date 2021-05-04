@@ -5,3 +5,5 @@
 # References
 - [放送大学「正多面体と素数（’２１）」（テレビ科目紹介） \- YouTube](https://www.youtube.com/watch?v=E-48ent631o)
 - [正多面体と素数の通販/橋本 義武 \- 紙の本：honto本の通販ストア](https://honto.jp/netstore/pd-book_30829909.html)
+- [Symmetric Waves — Greg Egan](http://www.gregegan.net/SCIENCE/SymmetricWaves/SymmetricWaves.html)
+- [Quantum Mechanics and the Dodecahedron \| Azimuth](https://johncarlosbaez.wordpress.com/2017/12/31/quantum-mechanics-and-the-dodecahedron/)
