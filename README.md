@@ -7,6 +7,7 @@
 1. [『正多面体と素数』の計算をしましょう\(1\) ――正二十面体・辺の中点を∞へ立体射影 \- Shironetsu Blog](https://shironetsu.hatenadiary.com/entry/2021/05/05/102317)
 2. [『正多面体と素数』の計算をしましょう\(2\)―正二十面体・面の中心を∞へ立体射影 \- Shironetsu Blog](https://shironetsu.hatenadiary.com/entry/2021/05/09/185131)
 3. [『正多面体と素数』の計算をしましょう\(3\)―正二十面体・頂点を∞へ立体射影 \- Shironetsu Blog](https://shironetsu.hatenadiary.com/entry/2021/05/11/001004)
+4. [『正多面体と素数』の計算をしましょう\(4\)―正二十面体・あいだの次数・p=59問題 \- Shironetsu Blog](https://shironetsu.hatenadiary.com/entry/2021/05/13/232758)
 
 ## 「球面調和関数で正20面体を作る」シリーズ
 1. [球面調和関数で正20面体をつくる \- Shironetsu Blog](https://shironetsu.hatenadiary.com/entry/2018/02/10/233959)
