@@ -1,0 +1,543 @@
+[:contents]
+
+* これは何
+
+橋本義武『正多面体と素数』（2020年、放送大学教育振興会）、主に10章「正20面体多項式」の計算を確かめます。
+
+Sagemath等による計算ノートやその他のリソースを以下のリポジトリに上げています。順次追加予定。
+[https://github.com/shironetsu/icosahedron:embed:cite]
+
+* その12番目のほとんど想像を絶する効用
+
+黄金比 [tex:{\phi}] とは、 [tex:{t^2-t-1=0}] のふたつの実根のうち大きいほうのことをいう。すなわち、
+\begin{align}
+    \phi=\frac{1+\sqrt{5}}{2}.
+\end{align}
+もう一方の解は  [tex:{-\phi^{-1}=(1-\sqrt{5})/2.}] 
+
+15世紀イタリアの芸術家にして数学者、フランシスコ会修道士のルカ・パチョーリはその著書『神聖な比例』（<i>Divina proportione</i>）の中で、黄金比の「その12番目のほとんど想像を絶する効用」として、黄金比を用いた正二十面体の構成法に言及しているという[<a href="#ref-coxeter">Coxeter</a>]。
+
+その12番目の効用とはこうだ；縦横比を [tex:{\phi:1}] とする長方形を図1.のように組み合わせる。するとその頂点の全体が正20面体をなす。
+
+><figure class="figure-image figure-image-fotolife" style="width:400px; margin:0 auto" title="縦横比Φ:1の長方形3枚をたがいに直交するように組み合わせる。頂点を結ぶと正20面体が現れる。">[f:id:shironetsu:20180210224315p:plain]<figcaption>縦横比Φ:1の長方形3枚をたがいに直交するように組み合わせる。頂点を結ぶと正20面体が現れる。</figcaption></figure><
+
+デカルト座標で表すと、複号は全ての組み合わせに渡るとして
+\begin{align}
+    (0,\pm\phi,\pm1),\\
+    (\pm 1, 0, \pm\phi),\\
+    (\pm\phi, \pm 1, 0)
+\end{align}
+の12点が正20面体の頂点になるということ。
+
+これから正二十面体を表現するために3つの座標のとりかたを見ていくが、辺の中点のうち6つが [tex:{x,y,z}] 軸上にくるこの取り方はとりわけ重要な意味を持つ。
+
+====
+
+本ブログでは過去にも正20面体が関係するふたつの「例外的な現象」について考えたとき、正20面体がこのようにして構成できることを活用した。
+
+[https://shironetsu.hatenadiary.com/entry/2019/03/17/024946:embed:cite]
+[https://shironetsu.hatenadiary.com/entry/2019/09/11/020627:embed:cite]
+
+正20面体には、頂点・面の中心・辺の中点が全て代数的整数になるような座標の取り方が（ [tex:{x,y}] 軸を入れ替えるような自明な差を除いて）3つある。その3つの座標の取り方はそれぞれ、立体射影で無限遠点 [tex:{\infty}] に移るのが
+- 頂点
+- 中心から外接球への面の中心の射影
+- 中心から外接球への辺の中点の射影
+
+のどれになるかで特徴付けられる。順に<b>V-座標系</b>、<b>F-座標系</b>、<b>E-座標系</b>とでも呼んでおこう。上で挙げたのは、今回の記事で扱うE-座標系にあたる。V, F-座標系は次回以降に挙げる記事で扱う予定。
+
+『正多面体と素数』では球面三角法をそのスタートに据え、 [tex:{\phi}]  は登場しない。本記事では  [tex:{\phi}]  が活躍する方法で正二十面体多項式を計算してみよう。
+
+* 公式集
+あとで利用するために、 [tex:{\phi}]  に関する関係式を列挙しておく。
+
+まず愚直な計算から
+\begin{align}
+    \phi+\phi^{-1} &= \sqrt{5},\\
+    \sqrt{1+\phi^2} &= 5^{\frac{1}{4}}\phi^{\frac{1}{2}}.\\
+\end{align}
+
+** 1の5乗根との関係
+ [tex:{\varepsilon:=e^{2\pi i/5}}] とすると [tex:{\cos(2\pi/5)=(\varepsilon+\varepsilon^{-1})/2>0}] だから、
+\begin{gather}
+    1+\varepsilon+\varepsilon^2+\varepsilon^3+\varepsilon^4=0,\\
+    (\varepsilon+\varepsilon^{-1})^2+(\varepsilon+\varepsilon^{-1})-1=0,\\
+    2\cos\frac{2\pi}{5}=\varepsilon+\varepsilon^{-1}=\frac{-1+\sqrt{5}}{2}=\phi^{-1}.
+\end{gather}
+同様に,
+\begin{align}
+        2\cos\frac{4\pi}{5}=\varepsilon^2+\varepsilon^{-2}=\frac{-1-\sqrt{5}}{2}=-\phi.
+\end{align}
+これらから
+\begin{alignat}{2}
+    &\cos\frac{\pi}{5}=\frac{\phi}{2},\hspace{10pt}
+    &&\sin\frac{\pi}{5}=\frac{5^{\frac{1}{4}}\phi^{-\frac{1}{2}}}{2},\\
+    &\cos\frac{2\pi}{5}=\frac{\phi^{-1}}{2},\hspace{10pt}
+    &&\sin\frac{2\pi}{5}=\frac{5^{\frac{1}{4}}\phi^{\frac{1}{2}}}{2}
+\end{alignat}
+を得る。
+
+** フィボナッチ数との関係
+フィボナッチ数  [tex:{F_n}] を
+\begin{align}
+    F_n&=\left\{
+        \begin{array}{cc}
+            F_{n+2}-F_{n+1}=(-1)^{-n+1}F_{-n} & n\leq -1,\\
+            0 & n=0, \\
+            1 & n=1, \\
+            F_{n-1}+F_{n-2} & n\geq 2\\
+        \end{array}
+    \right.
+\end{align}
+によって再帰的に定義する。このとき、
+\begin{align}
+    \phi^n &= F_n\phi + F_{n-1}, (n\in \mathbb{Z})
+\end{align}
+特に、
+\begin{align}
+    \phi^{-1} &= \phi-1,\\
+    \phi^2 &= \phi+1.
+\end{align}
+
+* 正20面体多項式
+
+** 頂点が根に対応する12次の多項式
+E-座標系に置かれた正20面体の12個の頂点に以下のように1から12の番号を振り、[tex:{P_1,\cdots,P_{12}}] とする。
+
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/icosahedron-midpoint-of-edge-to-infinity.svg?raw=true"/> 
+<figcaption><b>FIg 2.</b>（左上）+x軸方向から見た正20面体。（右上）同じく+y軸から。（左下）同じく+z軸から。</figcaption>
+</figure>
+
+ふたつの頂点 [tex:{P_1}] と [tex:{P_2}] に対して、[tex:{\vec{OP_1}}] と [tex:{\vec{OP_2}}] のなす角を [tex:{\theta_1}] とする。[tex:{1\leq i < j\leq 12}] に対して [tex:{\vec{OP_i}}] と [tex:{\vec{OP_j}}] の間の角は 鋭角なら [tex:{\theta_1}]、鈍角なら [tex:{\pi-\theta_1=:2\theta'_1}] に限られる。
+
+<figure style="width:300px; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/spherical-equilateral-triangle.svg?raw=true"/> 
+<figcaption><b>FIg 3.</b> [tex:{P_1}]、[tex:{P_2}]、[tex:{P_3}]の3点を頂点に持つ球面三角形。[tex:{\theta_2}]は今回は使わない。</figcaption>
+</figure>
+
+内積を取ることにより、
+\begin{align}
+    \cos\theta_1 = \frac{\phi}{1+\phi^2} = \frac{1}{\phi^{-1}+\phi}=\frac{1}{\sqrt{5}}.
+\end{align}
+
+半角公式などから、
+\begin{align}
+    \cos\frac{\theta_1}{2}&=5^{-\frac{1}{4}}\phi^{\frac{1}{2}},\\
+    \sin\frac{\theta_1}{2}&=5^{-\frac{1}{4}}\phi^{-\frac{1}{2}},\\
+    \tan\frac{\theta_1}{2}&=\phi^{-1}.
+\end{align}
+
+この [tex:{\theta_1}] を使うと、外接球の半径が1のとき、正20面体の頂点の座標は以下のようになる。
+
+\begin{alignat}{4}
+    P_1 &= \Big(
+        &\cos\frac{\theta_1}{2},&\ 
+        &\sin\frac{\theta_1}{2},&\ 
+        &0&
+    \Big),\\
+    P_2 &= \Big(
+        &0,&\ 
+        &\cos\frac{\theta_1}{2},&\ 
+        &\sin\frac{\theta_1}{2}&
+    \Big),\\
+    P_3 &= \Big(
+        &\sin\frac{\theta_1}{2},&\ 
+        &0,&\ 
+        &\cos\frac{\theta_1}{2}&
+    \Big),\\
+    P_4 &= \Big(
+        &\cos\frac{\theta_1}{2},&\ 
+        &-\sin\frac{\theta_1}{2},&\ 
+        &0&
+    \Big),\\
+    P_5 &= \Big(
+        &\sin\frac{\theta_1}{2},&\ 
+        &0,&\ 
+        &-\cos\frac{\theta_1}{2}&
+    \Big),\\
+    P_6 &= \Big(
+        &0,&\ 
+        &\cos\frac{\theta_1}{2},&\ 
+        &-\sin\frac{\theta_1}{2}&
+    \Big),\\
+    P_7 &= \Big(
+        &0,&\ 
+        &-\cos\frac{\theta_1}{2},&\ 
+        &\sin\frac{\theta_1}{2}&
+    \Big),\\
+    P_8 &= \Big(
+        &-\sin\frac{\theta_1}{2},&\ 
+        &0,&\ 
+        &\cos\frac{\theta_1}{2}&
+    \Big),\\
+    P_9 &= \Big(
+        &-\cos\frac{\theta_1}{2},&\ 
+        &\sin\frac{\theta_1}{2},&\ 
+        &0&
+    \Big),\\
+    P_{10}&= \Big(
+        &-\sin\frac{\theta_1}{2},&\ 
+        &0,&\ 
+        &-\cos\frac{\theta_1}{2}&
+    \Big),\\
+    P_{11} &= \Big(
+        &0,&\ 
+        &-\cos\frac{\theta_1}{2},&\ 
+        &-\sin\frac{\theta_1}{2}&
+    \Big),\\
+    P_{12} &= \Big(
+        &-\cos\frac{\theta_1}{2},&\ 
+        &-\sin\frac{\theta_1}{2},&\ 
+        &0&
+    \Big),\\
+\end{alignat}
+
+インデックスは [tex:{7\leq i\leq 12}] で
+\begin{align}
+    P_i = P_{13-i}
+\end{align}
+となるようにとった。
+
+まとめて書くと、複号は全ての組み合わせに渡るとして、
+\begin{align}
+    \left(0,\pm\cos\frac{\theta_1}{2},\pm\sin\frac{\theta_1}{2}\right),\\
+    \left(\pm\sin\frac{\theta_1}{2},0,\pm\cos\frac{\theta_1}{2}\right),\\
+    \left(\pm\cos\frac{\theta_1}{2},\pm\sin\frac{\theta_1}{2},0\right),\\
+\end{align}
+の12点。
+
+立体射影  [tex:{\varphi:S^2\rightarrow \mathbb{C}\cup \{\infty\}}] は
+
+\begin{align}
+    \varphi:x=(x_1, x_2, x_3) \mapsto 
+    \left\{
+    \begin{aligned}
+    &\infty & x = (0,0,-1),\\
+    &\frac{x_1+x_2i}{1+x_3} & \mbox{otherwise.}\\
+    \end{aligned}
+    \right.
+\end{align}
+
+で定義される。球面上の対蹠点同士について
+\begin{align}
+    \varphi(-x) = -\overline{\varphi(x)^{-1}}
+\end{align}
+となることに注意。
+
+[tex:{\zeta_i = \varphi(P_i)}]
+とすると、
+\begin{align}
+    \zeta_1 &= e^{i\theta_1/2},\\
+    \zeta_2 &= i\tan\frac{\theta_1'}{2},\\
+    \zeta_3 &= \tan\frac{\theta_1}{4},\\
+    \zeta_4 &= e^{-i\theta_1/2},\\
+    \zeta_5 &= \left(\tan\frac{\theta_1}{4}\right)^{-1},\\
+    \zeta_6 &= i\left(\tan\frac{\theta_1'}{2}\right)^{-1}.
+\end{align}
+
+ただし一般に、
+\begin{align}
+    \frac{\sin\theta}{1\pm\cos\theta}&=\left(\tan\frac{\theta}{2}\right)^{\pm 1}\\
+    \frac{\cos\theta}{1\pm\sin\theta}&=\left(\tan\frac{\pi-2\theta}{4}\right)^{\pm 1}
+\end{align}
+となることを用いた。
+
+まとめて書くと、
+\begin{align}
+    \pm\,i\left(\tan\frac{\theta'_1}{2}\right)^{\pm 1},\\
+    \pm \left(\tan\frac{\theta_1}{4}\right)^{\pm 1},\\
+    \pm e^{\pm i\theta_1/2}.
+\end{align}
+
+根の全体がこの12点に一致するモニック多項式 [tex:{F_{12}(X)}]を計算する。
+
+一般に、
+\begin{align}
+    \tan^2\theta + (\tan\theta)^{-2}=\frac{8}{1-\cos4\theta}-2 
+\end{align}
+から、
+\begin{align}
+    \tan^2\frac{\theta_1'}{2}+\left(\tan\frac{\theta_1'}{2}\right)^{-2}
+    =&\frac{8}{1-\cos2\theta_1'}-2\\
+    =&\frac{8}{1+\cos\theta_1}-2\\
+    =&8-2\sqrt{5}\\
+    \tan^2\frac{\theta_1}{4}+\left(\tan\frac{\theta_1'}{4}\right)^{-2}
+    =&\frac{8}{1-\cos\theta_1}-2\\
+    =&8+2\sqrt{5}
+\end{align}
+
+となることを利用すると、
+
+\begin{align}
+    (X-\zeta_1)(X-\zeta_4)(X-\zeta_{12})(X-\zeta_{9})
+    =&(X-e^{i\theta_1/2})(X-e^{-i\theta_1/2})(X+e^{i\theta_1/2})(X+e^{i\theta_1/2})\\
+    =&X^4-2\cos\theta_1X^2+1\\
+    =&X^4-\frac{2}{\sqrt{5}}X^2+1\\
+    (X-\zeta_2)(X-\zeta_6)(X-\zeta_7)(X-\zeta_{11})
+    =&
+    \left(X-i\tan\frac{\theta_1'}{2}\right)
+    \left(X-i\left(\tan\frac{\theta_1'}{2}\right)^{-1}\right)\\
+    &\times\left(X+i\tan\frac{\theta_1'}{2}\right)
+    \left(X+i\left(\tan\frac{\theta_1'}{2}\right)^{-1}\right)\\
+    =&X^4+\left(\tan^2\frac{\theta'_1}{2} + \left(\tan\frac{\theta'_1}{2}\right)^{-2}\right)X^2+1\\
+    =&X^4+\left(8-2\sqrt{5}\right)X^2+1\\
+    (X-\zeta_3)(X-\zeta_5)(X-\zeta_8)(X-\zeta_{10})
+    =&\left(X-\tan\frac{\theta_1}{4}\right)\left(X-\left(\tan\frac{\theta_1}{4}\right)^{-1}\right)\\
+    &\times\left(X+\tan\frac{\theta_1}{4}\right)\left(X+\left(\tan\frac{\theta_1}{4}\right)^{-1}\right)\\
+    =&X^4-\left(\tan^2\frac{\theta_1}{4}+\left(\tan\frac{\theta_1}{4}\right)^{-2}\right)X^2+1\\
+    =&X^4-(8+2\sqrt{5})X^2+1
+\end{align}
+から、
+\begin{align}
+    \therefore F_{12}(X)
+    &=\prod_{i=1}^{12}(X-\xi_i)\\
+    &=\left(X^4+(8-2\sqrt{5})X^2+1\right)
+    \left(X^4-(8+2\sqrt{5})X^2+1\right)
+    \left(X^4-\frac{2}{\sqrt{5}}X^2+1\right)\\
+    &=X^{12}-\frac{22}{\sqrt{5}}X^{10}-33X^8+\frac{44}{\sqrt{5}}X^6-33X^4-\frac{22}{\sqrt{5}}X^2+1.
+\end{align}
+を得る。これは『正多面体と素数』p.136において [tex:{1/\sqrt{5}\, F_R^{\{0\}}(X)}] で表される「正20面体多項式」と一致する。中間項（最高次と定数項以外）の係数に現れている11の倍数たちに注意。
+
+[tex:{X=x/y}] の代入と [tex:{y^{12}}]をかけて同次多項式化する。
+\begin{align}
+    F_{12}(x,y) 
+    =& y^{12}F_{12}\left(\frac{x}{y}\right)\\
+    =&x^{12}+y^{12}\\
+    &-\frac{2\cdot11}{\sqrt{5}}(x^{10}y^2+x^2y^{10})\\
+    &-3\cdot11(x^8y^4+x^4y^8)\\
+    &+\frac{2^2\cdot11}{\sqrt{5}}x^6y^6
+\end{align}
+
+** 面の中心が根に対応する20次の多項式
+一般に、2変数関数[tex:{f(x,y)}]の<b>ヘッシアン</b>
+\begin{align}
+    H\lbrack f\rbrack=
+    \begin{pmatrix}
+        f_{xx} & f_{xy}\\
+        f_{yx} & f_{yy}
+    \end{pmatrix}
+\end{align}
+の行列式
+\begin{align}
+    h(x,y)=\det(H\lbrack f\rbrack)
+\end{align}
+について、
+\begin{align}
+    h(ax+by, cx+dy) = (ad-bc)^2 h(x,y)
+\end{align}
+が成立する。従って、[tex:{SL(2,\mathbb{C})}] の作用で [tex:{f}] が不変なら [tex:{h}] も不変。上で得た [tex:{F_{12}(x,y)}] のヘッシアンの行列式に、[tex:{x}]の最高次の係数が1となるように定数倍すると、
+\begin{align}
+    F_{20}(x,y)
+    =&\frac{-\sqrt{5}}{12\cdot11\cdot22\cdot2}\det\left(H\lbrack F_{12}(x,y)\rbrack\right)\\
+    =&x^{20}+y^{20}\\
+    &+\frac{2\cdot 19\sqrt{5}}{3}(x^{18}y^2+x^2y^{18})\\
+    &-19\,(x^{16}y^4+x^4y^{16})\\
+    &+2^3\cdot 19\sqrt{5}\,(x^{14}y^6+x^6y^{14})\\
+    &-2\cdot13\cdot19\,(x^{12}y^8+x^8y^{12})\\
+    &-\frac{2^2\cdot13\cdot19\sqrt{5}}{3}x^{10}y^{10}
+\end{align}
+を得る。不思議なことに――と言うほかないと思うのだが――[tex:{F_{20}(X,1)=0}]の20個の根は、「正20面体の辺の中点から外接球へ射影した点」の立体射影の像の全体に一致する。種を明かすと[tex:{SU(2)}] の21次元既約表現の正20面体群への制限が、1次元表現（恒等表現）を重複度1でしか持たないことが背景にある。
+
+[tex:{F_{20}(x,y)}] は『正多面体と素数』p.137の [tex:{1/3 H(x,y)}] に一致する。全ての中間項の係数に現れる19に注目。
+
+** 辺の中点が根に対応する20次の多項式
+一般に、<b>ヤコビアン（関数行列式）</b>
+\begin{align}
+    j(x,y)=J\lbrack f,g\rbrack=
+    \begin{vmatrix}
+        f_x & g_x\\
+        f_y & g_y
+    \end{vmatrix}
+\end{align}
+に対して
+\begin{align}
+j(ax+by, cx+dy) = (ad-bc) j(x,y)
+\end{align}
+が成り立つ。従って、ヘッシアンの行列式同様、[tex:{SL(2,\mathbb{C})}] の作用で元の関数 [tex:{f,g}] が不変なら [tex:{j}] も不変。[tex:{F_{12}(x,y), F_{20}(x,y)}] から、[tex:{x}] の最高次の係数が1となるように行列式を定数倍すると、
+
+\begin{align}
+    F_{30}(x,y)
+    =& \frac{1}{480\sqrt{5}}
+    J\lbrack F_{12}, F_{20}\rbrack\\
+    =&(x^{29}y-xy^{29})\\
+    &+\frac{2^2\cdot 29}{3^2\sqrt{5}}(x^{27}y^3-x^3y^{27})\\
+    &+\frac{29\cdot 61}{5^2}(x^{25}y^5-x^5y^{25})\\
+    &-\frac{2^4\cdot 29}{\sqrt{5}}(x^{23}y^7-x^7y^{23})\\
+    &+\frac{3\cdot23\cdot29}{5}(x^{21}y^9-x^9y^{21})\\
+    &+\frac{2^2\cdot23\cdot29}{3\sqrt{5}}(x^{19}y^{11}-x^{11}y^{19})\\
+    &+\frac{19\cdot23\cdot29}{5}(x^{17}y^{13}-x^{13}y^{17})
+\end{align}
+
+を得る。『正多面体と素数』p.137の[tex:{1/225\,T(x,y)}] に一致する。中間項の係数に現れる29に注目。
+
+群指標の理論から、正20面体の作用で不変な [tex:{2\ell}] 次の2変数多項式の次元は
+\begin{align}
+g(t)=\frac{1-t^{30}}{(1-t^6)(1-t^{10})(1-t^{15})}
+\end{align}
+の[tex:{\ell}] 次の係数に一致することが証明される（ポアンカレ級数という）。30次までの項は、
+\begin{align}
+g(t)=1+t^6+t^{10}+t^{12}+t^{15}+t^{16}+t^{18}+t^{20}+t^{21}+t^{22}+t^{24}+t^{25}+t^{26}+t^{27}+t^{28}+2t^{30}+t^{31}+\cdots.
+\end{align}
+これは59次には正20面体不変な多項式は存在しないか1次元で、60次元になって初めて2つの異なる不変式が存在することを意味する。
+
+さて、ここまでで得た[tex:{F_{12},\,F_{20},\,F_{30}}]から60次の正20面体多項式は3つ作れる。それぞれ[tex:{F_{12}^5,\,F_{20}^3,\,F_{30}^2}]。ところが上の事実から、これらの間には自明でない線型関係が存在しなくてはならない。実際に計算すると、
+\begin{align}
+F_{12}^5 - F_{20}^3+60\sqrt{5}\,F_{30}^2=0
+\end{align}
+という関係があることが分かる。凄まじい。
+
+* 32次、42次、50次、62次の正20面体多項式
+[tex:{F_{12},\,F_{20},\,F_{30}}]から『正多面体と素数』pp.138-139と等価な結果を再現できる。結果だけ書く。
+** 32次
+\begin{align}
+    F_{32}(x,y)=&F_{12}(x,y)F_{20}(x,y)\\
+    =&(x^{32}+y^{32})\\
+    &+\frac{2^2\cdot 31}{3\sqrt{5}}(x^{30}y^2+x^2y^{30})\\
+    &-\frac{2^5\cdot 31}{3}(x^{28}y^4+x^4y^{28})\\
+    &-\frac{2^2\cdot 7\cdot 31}{\sqrt{5}}(x^{26}y^6+x^6y^{26})\\
+    &-\frac{2^2\cdot 5\cdot13\cdot 31}{3}(x^{24}y^8+x^8y^{24})\\
+    &-\frac{2^2\cdot 7\cdot 13\cdot 31\sqrt{5}}{3}(x^{22}y^{10}+x^{10}y^{22})\\
+    &+\frac{2^5\cdot 7\cdot 13 \cdot 31}{3}(x^{20}y^{12}+x^{12}y^{20})\\
+    &+\frac{2^2\cdot 5\cdot  \sqrt{5}}{3}
+\end{align}
+中間項の係数には31が現れている。
+
+** 42次
+\begin{align}
+    F_{42}(x,y)=&F_{12}(x,y)F_{30}(x,y)\\
+    =&x^{41}y-xy^{41}\\
+    &-\frac{2\cdot 41}{3^2\sqrt{5}}\left(x^{39}y^3-x^3y^{39}\right)\\
+    &-\frac{2^3\cdot 13\cdot 41}{3^2\cdot 5^2}\left(x^{37}y^5-x^5y^{37}\right)\\
+    &-\frac{2\cdot 13^3\cdot 41}{3\cdot 5^2\sqrt{5}}\left(x^{35}y^7-x^7y^{35}\right)\\
+    &+\frac{13\cdot 41 \cdot 79}{3^2\cdot 5^2}\left(x^{33}y^9-x^9y^{33}\right)\\
+    &+\frac{2^3\cdot 13\cdot 41\cdot 59}{5^2\sqrt{5}}\left(x^{31}y^{11}-x^{11}y^{31}\right)\\
+    &-\frac{2^4\cdot 31\cdot 41\cdot 233}{3^2\cdot 5^2}\left(x^{29}y^{13}-x^{13}y^{29}\right)\\
+    &-\frac{2^3\cdot 29\cdot 31\cdot 41^2}{3^2\cdot 5^2\sqrt{5}}\left(x^{27}y^{15}-x^{15}y^{27}\right)\\
+    &-\frac{2\cdot 7\cdot 13\cdot 29\cdot 31\cdot 41}{3\cdot 5^2}\left(x^{25}y^{17}-x^{17}y^{25}\right)\\
+    &+\frac{2^2\cdot 13\cdot 29\cdot 31\cdot 41}{3\cdot 5\sqrt{5}}\left(x^{23}y^{19}-x^{19}y^{23}\right)
+\end{align}
+中間項の係数には41が現れている。
+
+** 50次
+\begin{align}
+    F_{50}(x,y)
+    =&F_{20}(x,y)F_{30}(x,y)
+    \\=&(x^{49}y-xy^{49})
+    \\&+\frac{2\cdot 7^3}{3^2\sqrt{5}}\left(x^{47}y^{3}-x^{3}y^{47}\right)
+    \\&+\frac{2\cdot 7^2\cdot 1481}{3^3\cdot 5^2}\left(x^{45}y^{5}-x^{5}y^{45}\right)
+    \\&+\frac{2\cdot 7\cdot 17\cdot 857}{3^2\cdot 5\sqrt{5}}\left(x^{43}y^{7}-x^{7}y^{43}\right)
+    \\&-\frac{2^2\cdot 7^2\cdot 11\cdot 13\cdot 43}{3^2\cdot 5^2}\left(x^{41}y^{9}-x^{9}y^{41}\right)
+    \\&+\frac{2\cdot 7^2\cdot 43\cdot 863}{3^2\cdot 5\sqrt{5}}\left(x^{39}y^{11}-x^{11}y^{39}\right)
+    \\&-\frac{2\cdot 7^2\cdot 19\cdot 43\cdot 877}{3^3\cdot 5^2}\left(x^{37}y^{13}-x^{13}y^{37}\right)
+    \\&+\frac{2\cdot 7\cdot 19\cdot 37\cdot 43\cdot 59}{3^2\cdot 5\sqrt{5}}\left(x^{35}y^{15}-x^{15}y^{35}\right)
+    \\&+\frac{7^2\cdot 19\cdot 37\cdot 43}{3^2\cdot 5^2}\left(x^{33}y^{17}-x^{17}y^{33}\right)
+    \\&+\frac{2^2\cdot 7^2\cdot 37\cdot 43\cdot 137}{3^2\cdot 5\sqrt{5}}\left(x^{31}y^{19}-x^{19}y^{31}\right)
+    \\&-\frac{2^2\cdot 7\cdot 11\cdot 31\cdot 37\cdot 43\cdot 79}{3^3\cdot 5^2}\left(x^{29}y^{21}-x^{21}y^{29}\right)
+    \\&-\frac{2^2\cdot 7^2\cdot 29\cdot 31\cdot 37\cdot 43}{3^2\cdot 5\sqrt{5}}\left(x^{27}y^{23}-x^{23}y^{27}\right)
+\end{align}
+中間項の係数には [tex:{49=7^2}] が現れている。
+
+** 62次
+\begin{align}
+    F_{62}(x,y)
+    =&F_{12}(x,y)F_{20}(x,y)F_{30}(x,y)
+    \\=&x^{61}y-xy^{61}
+    \\&+\frac{2^3\cdot 61}{3^2\cdot \sqrt{5}}\left(x^{59}y^{3}-x^{3}y^{59}\right)
+    \\&-\frac{61\cdot 1697}{3^3\cdot 5^2}\left(x^{57}y^{5}-x^{5}y^{57}\right)
+    \\&-\frac{2^5\cdot 13\cdot 61\cdot 71}{3^3\cdot 5^2\sqrt{5}}\left(x^{55}y^{7}-x^{7}y^{55}\right)
+    \\&-\frac{11\cdot 23\cdot 61\cdot 463}{3^2\cdot 5^2}\left(x^{53}y^{9}-x^{9}y^{53}\right)
+    \\&+\frac{2^3\cdot 13\cdot 59\cdot 61\cdot 101}{3^3\cdot 5^2\sqrt{5}}\left(x^{51}y^{11}-x^{11}y^{51}\right)
+    \\&-\frac{17\cdot 37\cdot 61\cdot 881}{3^3\cdot 5}\left(x^{49}y^{13}-x^{13}y^{49}\right)
+    \\&-\frac{2^7\cdot 7\cdot 17\cdot 31\cdot 61}{3^3\cdot 5\sqrt{5}}\left(x^{47}y^{15}-x^{15}y^{47}\right)
+    \\&+\frac{7\cdot 23\cdot 29\cdot 61\cdot 4423}{3^3\cdot 5^2}\left(x^{45}y^{17}-x^{17}y^{45}\right)
+    \\&-\frac{2^3\cdot 7\cdot 11\cdot 23\cdot 61\cdot 3847}{3^3\cdot 5\sqrt{5}}\left(x^{43}y^{19}-x^{19}y^{43}\right)
+    \\&+\frac{7^2\cdot 11\cdot 23\cdot 37\cdot 43\cdot 61}{3^3\cdot 5^2}\left(x^{41}y^{21}-x^{21}y^{41}\right)
+    \\&-\frac{2^5\cdot 7\cdot 41\cdot 43\cdot 61\cdot 79}{3^3\cdot 5\sqrt{5}}\left(x^{39}y^{23}-x^{23}y^{39}\right)
+    \\&+\frac{7\cdot 13\cdot 41\cdot 43\cdot 61\cdot 6323}{3^3\cdot 5^2}\left(x^{37}y^{25}-x^{25}y^{37}\right)
+    \\&+\frac{2^3\cdot 7\cdot 37\cdot 41\cdot 43\cdot 61\cdot 311}{3^3\cdot 5^2\sqrt{5}}\left(x^{35}y^{27}-x^{27}y^{35}\right)
+    \\&-\frac{7\cdot 17\cdot 37^2\cdot 41\cdot 43\cdot 61}{3^3\cdot 5^2}\left(x^{33}y^{29}-x^{29}y^{33}\right)
+\end{align}
+中間項の係数には61が現れている。
+
+* 球面調和関数
+
+\begin{gather}
+    e^{\ell}_m(x,y):=\frac{x^{\ell+m}y^{\ell-m}}{\sqrt{(\ell+m)!(\ell-m)!}}\\
+    |m|\leq \ell
+\end{gather}
+
+とする。あわせて [tex:{2\ell+1}]個。並べれば[tex:{2\ell+1}]次2変数同時多項式の基底になるのは明らか。さらにこれを正規直交基底だと思う（3次元球面上の積分[tex:{L^2}]内積として正当化できる）。
+
+[tex:{F_{12}(x,y)}] を  [tex:{e^{\ell}_{m}(x,y)}] の線形和として書き表して正規化したものを [tex:{\tilde{F}_{12}}] とする。
+
+\begin{align}
+    \widetilde{F}_{12} =&
+\sqrt{\frac{3\cdot 5\cdot 7}{2^{10}}}\left(e^{6}_{6} + e^{6}_{-6}\right)
+\\&-\sqrt{\frac{7\cdot 11}{2^{9}}}\left(e^{6}_{4} + e^{6}_{-4}\right)
+\\&-\sqrt{\frac{3\cdot 7\cdot 11}{2^{10}}}\left(e^{6}_{2} + e^{6}_{-2}\right)
+\\&+\sqrt{\frac{11}{2^{8}}}e^{6}_{0}
+\end{align}
+
+さらに、
+\begin{align}
+    e^{\ell}_m(x,y) \rightarrow Y^{\ell}_m(\theta, \phi)
+\end{align}
+と「機械的に」球面調和関数で置き換えて球面上の関数 [tex:{\mathcal{F}_{12}}] へ変換する。
+
+\begin{align}
+    \mathcal{F}_{12}(\theta, \varphi) =& 
+\sqrt{\frac{3\cdot 5\cdot 7}{2^{10}}}\left(Y^{6}_{6} + Y^{6}_{-6}\right)
+\\&-\sqrt{\frac{7\cdot 11}{2^{9}}}\left(Y^{6}_{4} + Y^{6}_{-4}\right)
+\\&-\sqrt{\frac{3\cdot 7\cdot 11}{2^{10}}}\left(Y^{6}_{2} + Y^{6}_{-2}\right)
+\\&+\sqrt{\frac{11}{2^{8}}}Y^{6}_{0}
+\end{align}
+
+20次と30次も同様にして、
+
+\begin{align}
+\mathcal{F}_{20}
+    =&\sqrt{\frac{3\cdot 5\cdot 11\cdot 17}{2^{16}}}\left(Y^{10}_{10} + Y^{10}_{-10}\right)
+    \\&+\sqrt{\frac{5\cdot 11\cdot 17\cdot 19}{2^{15}\cdot 3}}\left(Y^{10}_{8} + Y^{10}_{-8}\right)
+    \\&-\sqrt{\frac{11\cdot 19}{2^{16}}}\left(Y^{10}_{6} + Y^{10}_{-6}\right)
+    \\&+\sqrt{\frac{5\cdot 11\cdot 19}{2^{13}}}\left(Y^{10}_{4} + Y^{10}_{-4}\right)
+    \\&-\sqrt{\frac{11\cdot 13\cdot 19}{2^{15}}}\left(Y^{10}_{2} + Y^{10}_{-2}\right)
+    \\&-\sqrt{\frac{5^{2}\cdot 13\cdot 19}{2^{14}\cdot 3}}Y^{10}_{0},\\
+    \mathcal{F}_{30}
+    =&-\sqrt{\frac{3^{3}\cdot 5^{3}\cdot 7\cdot 11\cdot 13}{2^{25}}}\left(Y^{15}_{14} - Y^{15}_{-14}\right)
+    \\&-\sqrt{\frac{5^{2}\cdot 11\cdot 13\cdot 29}{2^{22}}}\left(Y^{15}_{12} - Y^{15}_{-12}\right)
+    \\&-\sqrt{\frac{3\cdot 11\cdot 29\cdot 61^{2}}{2^{25}}}\left(Y^{15}_{10} - Y^{15}_{-10}\right)
+    \\&+\sqrt{\frac{3\cdot 5\cdot 7\cdot 11\cdot 29}{2^{19}}}\left(Y^{15}_{8} - Y^{15}_{-8}\right)
+    \\&-\sqrt{\frac{3^{5}\cdot 7\cdot 23\cdot 29}{2^{25}}}\left(Y^{15}_{6} - Y^{15}_{-6}\right)
+    \\&-\sqrt{\frac{5\cdot 11\cdot 23\cdot 29}{2^{22}}}\left(Y^{15}_{4} - Y^{15}_{-4}\right)
+    \\&-\sqrt{\frac{3\cdot 11\cdot 13\cdot 19\cdot 23\cdot 29}{2^{25}}}\left(Y^{15}_{2} - Y^{15}_{-2}\right)
+\end{align}
+
+そしてこれらを描画すると球面上に正二十面体の対称性を持つ模様が出現する。
+
+<div style="display:flex;flex-flow:row nowrap; justify-content:space-around;">
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12.gif?raw=true"/> 
+</figure>
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20.gif?raw=true"/> 
+</figure>
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30.gif?raw=true"/> 
+</figure>
+</div>
+<b>Fig 4.</b>　左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30}}]を適当に規格化して球面上に描画して回転させている。
+
+何が起こったのだろうか？　リーマン球面上での考察がいつの間にか3次元空間に戻ってきている。これこそが表現空間の「実体」を離れて「表現そのもの」を扱う表現論の強みだ。
+
+正二十面体の対称性を持つ球面調和関数の重ね合わせを計算するため試みは過去にも扱った。詳細は以下の「球面調和関数で正20面体をつくる」シリーズを参照。
+
+[https://shironetsu.hatenadiary.com/entry/2018/02/10/233959:embed:cite]
+[https://shironetsu.hatenadiary.com/entry/2018/03/31/235509:embed:cite]
+
+今回はここまで。V, F-座標系での計算、さらにより高次の「正20面体多項式」に関する現象を次回以降扱う。
+
+* References
+<ol>
+<li id="ref-coxeter">H.S.M. コクセター（銀林浩 訳）『幾何学入門』（2009年、筑摩書房）pp.301-303</li>
+<li>F.クライン（関口次郎, 前田博信訳）『正20面体と5次方程式』 （2012年、丸善出版）</li>
+</ol>

@@ -1,0 +1,336 @@
+[:contents]
+
+[https://shironetsu.hatenadiary.com/entry/2021/05/09/185131:embed:cite]
+
+つづき。今回は立体射影で無限遠点へ写されるのが正二十面体の頂点の一つであるような座標系、<b>V-座標系</b>を考える。『正多面体と素数』の10.2.2節に対応。
+
+『正20面体と5次方程式』を著したF. クライン［<a href="#ref-klein-1">Klein-1</a>，<a href="#ref-klein-2">Klein-2</a>］や、グレッグ・イーガン［<a href="#ref-egan">Egan</a>］もこの座標系を採用している。若干の記号の違いはあるが、前者ではここで計算するのと等価な式を見つけることができる。
+
+この座標系を利用して計算を行うことの利点は明白で、[tex:{z}] 軸が5回対称軸になるため正二十面体多項式の項数が最少になるのだ。正20面体ではこれが最大の対称性（含まれる元の位数の最大値）なので、係数の観察が主眼でなければこれは大変良い性質だ。[tex:{z}] 軸回りの回転周期が短いためGIFアニメーションを作るときのレンダー時間が最も少なくなるという現代的な利点もある。
+
+計算手順などは前の2つの記事で説明した通り。どんどん計算していこう。
+
+====
+
+* 頂点の立体射影を根に持つモニック多項式
+** 頂点の座標
+V-座標系では、12個の頂点 [tex:{P_1,\cdots,P_{12}}]は下図Fig.1のように配置される。
+
+<figure style="margin:0 auto;">
+<div style="width:80%;margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/icosahedron-vertex-to-infinity.svg?raw=True"/>
+</div>
+<figcaption><b>Figure 1.</b>　V-座標系に置かれた正20面体。それぞれ、[tex:{+x}]方向（左上）、[tex:{+y}]方向（右上）、[tex:{+z}]方向（左下）から見た図。</figcaption>
+</figure>
+
+引き続き [tex:{\vec{OP_1}}] と [tex:{\vec{OP_2}}] のなす角を [tex:{\theta_1}] とする。この角度は「外接球上で[tex:{P_1}] と [tex:{P_2}] を結ぶ大円の弧長」とも表現できる。
+
+<figure style="margin:0 auto;">
+<div style="width:80%;margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/spherical-equilateral-triangle.svg?raw=True"/>
+</div>
+<figcaption><b>Figure 2.</b>　正20面体の面一つに対応する球面三角形。</figcaption>
+</figure>
+
+12個の頂点の座標を列挙すると、
+
+\begin{alignat}{4}
+    P_1 &= \Big(
+        &0&,\,
+        &0&,\,
+        &1&
+    \Big),\\
+    P_2 &= \Big(
+        &\sin\theta_1&,\, 
+        &0&,\,
+        &\cos\theta_1&
+    \Big),\\
+    P_3 &= \Big(
+        &\sin\theta_1\cos\frac{2\pi}{5}&,\, 
+        &\sin\theta_1\sin\frac{2\pi}{5}&,\,
+        &\cos\theta_1&
+    \Big),\\
+    P_4 &= \Big(
+        &\sin\theta_1\cos\frac{4\pi}{5}&,\, 
+        &\sin\theta_1\sin\frac{4\pi}{5}&,\,
+        &\cos\theta_1&
+    \Big),\\
+    P_5 &= \Big(
+        &\sin\theta_1\cos\frac{6\pi}{5}&,\, 
+        &\sin\theta_1\sin\frac{6\pi}{5}&,\,
+        &\cos\theta_1&
+    \Big),\\
+    P_6 &= \Big(
+        &\sin\theta_1\cos\frac{8\pi}{5}&,\, 
+        &\sin\theta_1\sin\frac{8\pi}{5}&,\,
+        &\cos\theta_1&
+    \Big),\\
+    P_7 &= \Big(
+        &-\sin\theta_1\cos\frac{8\pi}{5}&,\, 
+        &-\sin\theta_1\sin\frac{8\pi}{5}&,\,
+        &-\cos\theta_1&    
+    \Big),\\ 
+    P_8 &= \Big(
+        &-\sin\theta_1\cos\frac{6\pi}{5}&,\, 
+        &-\sin\theta_1\sin\frac{6\pi}{5}&,\,
+        &-\cos\theta_1&
+    \Big),\\
+    P_9 &= \Big(
+        &-\sin\theta_1\cos\frac{4\pi}{5}&,\, 
+        &-\sin\theta_1\sin\frac{4\pi}{5}&,\,
+        &-\cos\theta_1&
+    \Big),\\
+    P_{10} &= \Big(
+        &-\sin\theta_1\cos\frac{2\pi}{5}&,\, 
+        &-\sin\theta_1\sin\frac{2\pi}{5}&,\,
+        &-\cos\theta_1&
+    \Big),\\
+    P_{11} &= \Big(
+        &-\sin\theta_1&,\, 
+        &0&,\,
+        &-\cos\theta_1&
+    \Big),\\
+    P_{12} &= \Big(
+        &0&,\, 
+        &0&,\,
+        &-1&
+    \Big).
+\end{alignat}
+[tex:{1\leq i\leq 6}] で [tex:{P_{i} = -P_{13-i}}] となっている。まとめて書くと、[tex:{k=0,1,2,3,4}] として、
+\begin{align}
+    \pm(0,0,1),\,  \pm\left(\sin\theta_1\cos\frac{2k\pi}{5},\,\sin\theta_1\sin\frac{2k\pi}{5},\, \cos\theta_1\right)
+\end{align}
+となる。立体射影 [tex:{\varphi:S^2\rightarrow \mathbb{C}\cup \{\infty\}}] が
+\begin{align}
+    \varphi:x=(x,y,z) \mapsto 
+    \left\{
+    \begin{aligned}
+    &\infty & (x,y,z) = (0,0,-1),\\
+    &\frac{x+yi}{1+z} & \mbox{otherwise.}\\
+    \end{aligned}
+    \right.
+\end{align}
+で決まっているとき、これらの頂点の像 [tex:{\varphi(P_i)=\zeta_i}] は、[tex:{\tan(\theta_1/2)=\phi^{-1}}] （記事（１）参照）と [tex:{\epsilon=e^{2\pi i/5}}]を使うと、
+\begin{align}
+    \zeta_1 &= 0, &
+    \zeta_2 &= \phi^{-1}, &
+    \zeta_3 &= \phi^{-1} \varepsilon, &
+    \zeta_4 &= \phi^{-1} \varepsilon^2, &
+    \zeta_5 &= \phi^{-1} \varepsilon^3, &
+    \zeta_6 &= \phi^{-1} \varepsilon^4,\\
+    \zeta_7 &= -\phi \varepsilon^4, &
+    \zeta_8 &= -\phi \varepsilon^3, &
+    \zeta_9 &= -\phi \varepsilon^2, &
+    \zeta_{10} &= -\phi \varepsilon, &
+    \zeta_{11} &= -\phi, &
+    \zeta_{12} &= \infty
+\end{align}
+となる。まとめて書くと、[tex:{k=0,1,2,3,4}] として、
+\begin{align}
+0,\, \phi^{-1}\varepsilon^k,\, -\phi\varepsilon^k,\,\infty.
+\end{align}
+これらのうち、無限遠点 [tex:{=\zeta_{12}}] を除く11点を根に持つモニック多項式を計算する。一見恣意的な除去だが、すぐ後で行う同次化によって無限遠点の寄与は回復する。
+\begin{align}
+    F_{12}(X)
+    &=\prod_{i=1}^{11} \left(X-\zeta_i\right)\\
+    &=X(X^5-\phi^{-5})(X+\phi^5)\\
+    &=X\left(X^{10}+(\phi^5-\phi^{-5})X^5-1\right)\\
+    &=X^{11}+11X^6-X.
+\end{align}
+期待通り中間項に11が現れた。一般に、リュカ数列（[https://oeis.org/A000032:title]）は
+\begin{align}
+L_n = \phi^n + (-\phi)^{-n}
+\end{align}
+だが、[tex:{L_5=11}] が現れていると見ることもできる。
+
+同次化すると、
+\begin{align}
+    F_{12}(x,y) &= y^{12} F_{12}(x/y)\\
+    &= x^{11}y+11x^{6}y^{6}-xy^{11}
+\end{align}
+となる。明らかに [tex:{F_{12}(x,0)=0}] だが、これが無限遠点に対応する。
+
+クライン『正20面体と5次方程式』では、
+\begin{align}
+f=z_1z_2\left(z_1^{10} + 11z_1^5z_2^5 - z_2^{10}\right)
+\end{align}
+という記号で同じものが登場している。
+
+高次の正20面体多項式は前回、前々回と同じ手順で計算していくだけだ。
+
+* 正20面体多項式
+** 20次
+\begin{align}
+    F_{20}(x,y)=
+&x^{20} + y^{20}
+\\&-2^2 \!\cdot\! 3 \!\cdot\! 19\left(x^{15}y^{5} - x^{5}y^{15}\right)
+\\&+2 \!\cdot\! 13 \!\cdot\! 19x^{10}y^{10}
+\end{align}
+中間項には [tex:{20-1=19}] が現れている。
+
+クライン『正20面体と5次方程式』では
+\begin{align}
+    H = -\left(z_1^{20}+z_2^{20}\right) + 228(z_1^{15}z_2^5-z_1^5z_2^{15})-494z_1^{10}z_2^{10}
+\end{align}
+が登場している。[tex:{z_1, z_2}] を [tex:{x,y}] に入れ替えると [tex:{F_{20}}] とはちょうど [tex:{-1}] 倍だけ異なる。[tex:{z_1}]の最高次の係数を [tex:{+1}] にしなかった理由は判然としない。
+
+** 30次
+\begin{align}
+    F_{30}(x,y)=
+&x^{30} + y^{30}
+\\&+2 \!\cdot\! 3^2 \!\cdot\! 29\left(x^{25}y^{5} - x^{5}y^{25}\right)
+\\&-3 \!\cdot\! 5 \!\cdot\! 23 \!\cdot\! 29\left(x^{20}y^{10} + x^{10}y^{20}\right)
+\end{align}
+中間項には [tex:{30-1=29}] が現れている。
+
+クライン『正20面体と5次方程式』では
+\begin{align}
+    T=\left(z_1^{30}+z_2^{30}\right)
+    +522\left(z_1^{25}z_2^5-z_1^5z_2^{25}\right)
+    -1005\left(z_1^{20}z_2^{10}-z_1^{10}z_2^{20}\right)
+\end{align}
+が登場している。[tex:{z_1, z_2}] を [tex:{x,y}] に入れ替えると両者は一致する。
+
+ここにE-座標系の際立った特徴が見られる。[tex:{F_{12},\, F_{20},\,F_{30}} の [tex:{x}] の最高次の係数を 1 に揃えたとき、他の係数もすべて整数になっている。この理由を説明できるだろうか？（ヘッシアンとヤコビアンを計算する過程でこうなることは分かると言えば分かる。が、「説明」としては物足りない）。
+
+また、これらの間には
+\begin{align}
+1728F_{12}^5 + F_{20}^3 - F_{30}^2=0
+\end{align}
+の関係がある。見知った仲の [tex:{1728=2^6\cdot 3^3}] が登場した。なぜここにも？
+
+この 1728 は簡単に手計算もできる。[tex:{x}] の高次の項から展開すると、
+\begin{align}
+    F_{30}^2 = x^{60} + 2 \cdot 2 \cdot 3^2 \cdot 29 x^{55}y^5 + \cdots,\\
+    F_{20}^3 = x^{60} - 3 \cdot 2^2\cdot 3\cdot 19 x^{55}y^5+\cdots\\
+\end{align}
+だから、
+\begin{align}
+    F_{30}^2-F_{20}^3 &= \left(2 \cdot 2 \cdot 3^2 \cdot 29 + 3 \cdot 2^2\cdot 3\cdot 19\right) x^{55} y^5+\cdots \\
+   &=1728\,x^{55} y^5+\cdots\\
+   &=1728\,F_{12}^5
+\end{align}
+というわけだ。うーん、摩訶不思議。
+
+** 32次
+\begin{align}
+    F_{32}(x,y)=&F_{12}F_{20}\\
+   =&x^{31}y - xy^{31}
+   \\&-7 \!\cdot\! 31\left(x^{26}y^{6} + x^{6}y^{26}\right)
+   \\&-5 \!\cdot\! 13 \!\cdot\! 31\left(x^{21}y^{11} - x^{11}y^{21}\right)
+   \\&+2 \!\cdot\! 5 \!\cdot\! 19 \!\cdot\! 31x^{16}y^{16}
+\end{align}
+中間項の係数には [tex:{32-1=31}] が現れている。
+
+** 42次
+\begin{align}
+    F_{42}(x,y)=&F_{12}F_{30}\\
+   =&x^{41}y - xy^{41}
+   \\&+13 \!\cdot\! 41\left(x^{36}y^{6} + x^{6}y^{36}\right)
+   \\&-2^3 \!\cdot\! 13 \!\cdot\! 41\left(x^{31}y^{11} - x^{11}y^{31}\right)
+   \\&-3 \!\cdot\! 29 \!\cdot\! 31 \!\cdot\! 41\left(x^{26}y^{16} + x^{16}y^{26}\right)
+\end{align}
+中間項の係数には [tex:{42-1=41}] が現れている。
+
+** 50次
+\begin{align}
+    F_{50}(x,y)=&F_{20}F_{30}\\
+   =&x^{50} + y^{50}
+   \\&+2 \!\cdot\! 3 \!\cdot\! 7^2\left(x^{45}y^{5} - x^{5}y^{45}\right)
+   \\&-7^2 \!\cdot\! 43 \!\cdot\! 61\left(x^{40}y^{10} + x^{10}y^{40}\right)
+   \\&+2^2 \!\cdot\! 3 \!\cdot\! 7 \!\cdot\! 19 \!\cdot\! 37 \!\cdot\! 43\left(x^{35}y^{15} - x^{15}y^{35}\right)
+   \\&-2 \!\cdot\! 7^2 \!\cdot\! 31 \!\cdot\! 37 \!\cdot\! 43\left(x^{30}y^{20} + x^{20}y^{30}\right)
+\end{align}
+中間項の係数には[tex:{x^{35}y^{15}, x^{15}y^{35}}] を除いて [tex:{50-1=49=7^2}] が現れている。除いた2項の係数には [tex:{7^1}] までが現れている。
+
+** 62次
+\begin{align}
+    F_{62}(x,y)=&F_{12}F_{20}F_{30}\\
+   =&x^{61}y - xy^{61}
+   \\&+5 \!\cdot\! 61\left(x^{56}y^{6} + x^{6}y^{56}\right)
+   \\&-2 \!\cdot\! 13 \!\cdot\! 61 \!\cdot\! 79\left(x^{51}y^{11} - x^{11}y^{51}\right)
+   \\&+5 \!\cdot\! 7 \!\cdot\! 17 \!\cdot\! 31 \!\cdot\! 61\left(x^{46}y^{16} + x^{16}y^{46}\right)
+   \\&+5 \!\cdot\! 7 \!\cdot\! 11 \!\cdot\! 23 \!\cdot\! 43 \!\cdot\! 61\left(x^{41}y^{21} - x^{21}y^{41}\right)
+   \\&-2 \!\cdot\! 7 \!\cdot\! 37 \!\cdot\! 41 \!\cdot\! 43 \!\cdot\! 61\left(x^{36}y^{26} + x^{26}y^{36}\right)
+\end{align}
+中間項の係数には [tex:{62-1=61}] が現れている。
+
+* 球面調和関数
+前回、前々回も利用した置き換え規則によって正二十面体多項式を球面上の正二十面体対称な関数へ変換する。
+今回は全ての次数を見てみよう。
+\begin{align}
+\mathcal{F}_{12}(\theta, \varphi) =& 
+    +\sqrt{\frac{7}{5^{2}}}\left(Y^{6}_{5} - Y^{6}_{-5}\right)
+    +\sqrt{\frac{11}{5^{2}}}Y^{6}_{0}\\
+\mathcal{F}_{20}(\theta, \varphi) =& 
+    +\sqrt{\frac{11 \!\cdot\! 17}{3 \!\cdot\! 5^{4}}}\left(Y^{10}_{10} + Y^{10}_{-10}\right)
+    -\sqrt{\frac{11 \!\cdot\! 19}{5^{4}}}\left(Y^{10}_{5} - Y^{10}_{-5}\right)
+    +\sqrt{\frac{13 \!\cdot\! 19}{3 \!\cdot\! 5^{4}}}Y^{10}_{0}\\
+\mathcal{F}_{30}(\theta, \varphi) =& 
+    +\sqrt{\frac{7 \!\cdot\! 11 \!\cdot\! 13}{2^{2} \!\cdot\! 5^{5}}}\left(Y^{15}_{15} + Y^{15}_{-15}\right)
+    +\sqrt{\frac{3 \!\cdot\! 11 \!\cdot\! 29}{2 \!\cdot\! 5^{5}}}\left(Y^{15}_{10} - Y^{15}_{-10}\right)
+    -\sqrt{\frac{23 \!\cdot\! 29}{2^{2} \!\cdot\! 5^{4}}}\left(Y^{15}_{5} + Y^{15}_{-5}\right)\\
+\mathcal{F}_{32}(\theta, \varphi) =& 
+    +\sqrt{\frac{3 \!\cdot\! 17 \!\cdot\! 23 \!\cdot\! 29}{2^{2} \!\cdot\! 5^{7}}}\left(Y^{16}_{15} - Y^{16}_{-15}\right)
+    -\sqrt{\frac{7 \!\cdot\! 17 \!\cdot\! 23 \!\cdot\! 31}{2 \!\cdot\! 3 \!\cdot\! 5^{7}}}\left(Y^{16}_{10} + Y^{16}_{-10}\right)\\
+    &-\sqrt{\frac{13 \!\cdot\! 17 \!\cdot\! 31}{2^{2} \!\cdot\! 5^{6}}}\left(Y^{16}_{5} - Y^{16}_{-5}\right)+\sqrt{\frac{2^{4} \!\cdot\! 19 \!\cdot\! 31}{3 \!\cdot\! 5^{6}}}Y^{16}_{0}\\
+\mathcal{F}_{42}(\theta, \varphi) =& 
+    +\sqrt{\frac{17 \!\cdot\! 19 \!\cdot\! 37}{2 \!\cdot\! 5^{7}}}\left(Y^{21}_{20} - Y^{21}_{-20}\right)
+    +\sqrt{\frac{3 \!\cdot\! 13 \!\cdot\! 17 \!\cdot\! 41}{2 \!\cdot\! 5^{7}}}\left(Y^{21}_{15} + Y^{21}_{-15}\right)
+    \\&-\sqrt{\frac{2 \!\cdot\! 13 \!\cdot\! 41}{5^{7}}}\left(Y^{21}_{10} - Y^{21}_{-10}\right)
+    -\sqrt{\frac{29 \!\cdot\! 31 \!\cdot\! 41}{2 \!\cdot\! 5^{7}}}\left(Y^{21}_{5} + Y^{21}_{-5}\right)\\
+\mathcal{F}_{50}(\theta, \varphi) =& 
+    +\sqrt{\frac{11 \!\cdot\! 23 \!\cdot\! 41 \!\cdot\! 47}{3 \!\cdot\! 5^{9}}}\left(Y^{25}_{25} + Y^{25}_{-25}\right)
+    +\sqrt{\frac{3 \!\cdot\! 7^{2} \!\cdot\! 11 \!\cdot\! 41}{2 \!\cdot\! 5^{10}}}\left(Y^{25}_{20} - Y^{25}_{-20}\right)
+    \\&-\sqrt{\frac{7^{2} \!\cdot\! 43 \!\cdot\! 61^{2}}{2 \!\cdot\! 3 \!\cdot\! 5^{10}}}\left(Y^{25}_{15} + Y^{25}_{-15}\right)
+    +\sqrt{\frac{7 \!\cdot\! 11 \!\cdot\! 19 \!\cdot\! 37 \!\cdot\! 43}{5^{10}}}\left(Y^{25}_{10} - Y^{25}_{-10}\right)
+    \\&-\sqrt{\frac{7^{2} \!\cdot\! 31 \!\cdot\! 37 \!\cdot\! 43}{2 \!\cdot\! 3 \!\cdot\! 5^{10}}}\left(Y^{25}_{5} + Y^{25}_{-5}\right)\\
+\mathcal{F}_{62}(\theta, \varphi) =& 
+    +\sqrt{\frac{19 \!\cdot\! 29 \!\cdot\! 47 \!\cdot\! 53 \!\cdot\! 59}{2^{2} \!\cdot\! 5^{12}}}\left(Y^{31}_{30} - Y^{31}_{-30}\right)
+    +\sqrt{\frac{47 \!\cdot\! 53 \!\cdot\! 61}{2 \!\cdot\! 5^{10}}}\left(Y^{31}_{25} + Y^{31}_{-25}\right)
+    \\&-\sqrt{\frac{13 \!\cdot\! 47 \!\cdot\! 61 \!\cdot\! 79^{2}}{2 \!\cdot\! 3 \!\cdot\! 5^{12}}}\left(Y^{31}_{20} - Y^{31}_{-20}\right)
+    +\sqrt{\frac{7 \!\cdot\! 17 \!\cdot\! 31^{2} \!\cdot\! 61}{2 \!\cdot\! 3 \!\cdot\! 5^{11}}}\left(Y^{31}_{15} + Y^{31}_{-15}\right)
+    \\&+\sqrt{\frac{7 \!\cdot\! 11 \!\cdot\! 19 \!\cdot\! 23 \!\cdot\! 43 \!\cdot\! 61}{2^{2} \!\cdot\! 3 \!\cdot\! 5^{11}}}\left(Y^{31}_{10} - Y^{31}_{-10}\right)
+    -\sqrt{\frac{2 \!\cdot\! 7 \!\cdot\! 37 \!\cdot\! 41 \!\cdot\! 43 \!\cdot\! 61}{3 \!\cdot\! 5^{12}}}\left(Y^{31}_{5} + Y^{31}_{-5}\right)
+\end{align}
+
+<div style="display:flex;width:800px;flex-flow:row wrap; justify-content:center;margin:0 auto;">
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-32-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-42-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-50-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-62-v.gif?raw=true"/> 
+</div>
+<b>Figure 3.</b>　（上列）左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30},\,\mathcal{F}_{32}}]。（下列）左から順に[tex:{\mathcal{F}_{42},\,\mathcal{F}_{50},\,\mathcal{F}_{62}}]。いずれも5回対称軸まわりに等速回転させている。
+
+* 展望
+次の事実が知られている［<a href="#ref-suzuki">Suzuki</a>］；
+<div style="border:1px solid black;border-radius:5px;padding:15px;">
+[tex:{q=p^n}\,(n\in \mathbb{N})] ([tex:{p}] は素数) に対して [tex:{PSL_2(\mathbb{F}_q)}] が 5次交代群 [tex:{A_5}] を部分群に持つための必要十分条件は、
+\begin{align}
+q \equiv 0,\, \pm 1\,\mod 5.
+\end{align} 
+</div>
+
+[tex:{q=11,\,19,\,29,\,31,\,41,\,49,\,61}] は全てこれを満たす。[tex:{A_5}] は正20面体群と同型なので、 [tex:{PSL_2(\mathbb{F}_q)}] は正二十面体群を部分群に持つということ。
+
+以下の記事では [tex:{q=11}] の場合のみではあるが、V-座標系で二項正二十面体群の元を列挙してから有限体へ移すことで、構成的にこれを示した。標数 [tex:{2}] 以外では他の [tex:{q}] でも同様にこれが行える。 
+[https://shironetsu.hatenadiary.com/entry/2019/03/17/024946:embed:cite]
+
+この事実は確かに正二十面体の係数に素数が現れることと整合はする（[tex:{\mathbb{F}_q}]上の射影直線の点を根に持つ多項式を考えるとよい）。だが「説明」には物足りない。
+
+また、正二十面体多項式はここで見た7個に限られない。より高次の正二十面体多項式と素数との関係はどうなっているのだろうか？　次回以降の記事ではこれを調べたい。
+
+* References
+<ol>
+<li>［<span id="ref-klein-1">Klein-1</span>］F. クライン（関口次郎、前田博信　訳）『正20面体と5次方程式　改訂新版』（丸善出版、2012年）</li>
+<li>［<span id="ref-klein-2">Klein-2</span>］Felix Klein（彌永 昌吉監修・足立 恒雄・浪川 幸彦監訳・石井 省吾・渡辺 弘訳）『クライン：１９世紀の数学』（共立出版、1995年）</li>
+<li>［<span id="ref-egan">Egan</span>］ [http://www.gregegan.net/SCIENCE/SymmetricWaves/SymmetricWaves.html:title]、2021年5月10日閲覧</li>
+<li>［<span id="ref-suzuki">Suzuki</span>］鈴木通夫『群論　上』（岩波書店、1977年）p.396
+</ol>
+
+今回の計算ノートは以下に上げています。
+
+[https://github.com/shironetsu/icosahedron/blob/main/platonic-solids-and-prime-numbers-10-02-02.ipynb:embed:cite]

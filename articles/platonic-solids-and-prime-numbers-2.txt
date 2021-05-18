@@ -1,0 +1,371 @@
+[:contents]
+
+[https://shironetsu.hatenadiary.com/entry/2021/05/05/102317:embed:cite]
+
+つづき。今回は『正多面体と素数』10.2.3「面の中心を [tex:{\infty}] へ立体射影する場合」に対応。
+
+[tex:{\mathbb{R}}^3]上で半径1の球に外接する正20面体に対して、頂点・面の中心・辺の中点の座標が全て代数的整数になるような置き方が3つ考えられるのだった。
+前の記事でそれぞれ以下のように名付け、E-座標系については既に扱った。
+
+<div style="display:flex;justify-content:center;">
+|*立体射影で無限遠点 ∞ に移る点|*本記事での呼称|
+|頂点|V-座標系|
+|中心から外接球への面の中心の射影|F-座標系|
+|中心から外接球への辺の中点の射影|E-座標系|
+</div>
+
+今回の記事では<b>F-座標系</b>を扱う。無限遠点に射影されるのは正確には「外接球の中心から面の中心（重心）の、球面上への射影」だが、混同がない限り単に「面の中心」と呼ぶことにする。球面上に張り付くまで膨らませた正20面体を考えると思えばいい。
+
+計算の手順は前と同じ。振り返っておこう。
+
+(1)　正二十面体の12個の頂点の座標を列挙する。
+(2)　(1)で得た頂点たちの、立体射影による[tex:{\mathbb{C}\cup\{\infty\}}]上への像を計算する。
+(3)　(2)で得た12個の複素数を根に持つモニック多項式 [tex:{F_{12}(X)}] を計算する。これが頂点に対する正二十面体多項式。
+(4)　[tex:{F_{12}(X)}] を12次の2変数同次多項式 [tex:{F_{12}(x,y)}] へ変換する。
+(5)　[tex:{F_{12}(x,y)}] のヘッシアンの行列式（2変数20次の同次多項式）を [tex:{x}]の最高次の係数が1になるように定数倍して [tex:{F_{20}(x,y)}] を求める。[tex:{F_{20}(X,1)}] は面に対する正二十面体多項式に一致する。
+(6)　[tex:{F_{12}(x,y)}] と [tex:{F_{20}(x,y)}] の関数行列式（2変数30次の同時多項式）を [tex:{x}] の最高次の係数が1になるように定数倍して[tex:{F_{30}(x,y)}] を求める。[tex:{F_{30}(X,1)}] は辺に対する正二十面体多項式に一致する。
+(7)　[tex:{F_{12}^{a} F_{20}^{b} F_{30}^{c}}] を計算する。ただし [tex:{(a,b,c)=(1,1,0), (1,0,1), (0,1,1), (1,1,1)}]。
+
+====
+
+* 頂点の立体射影を根に持つモニック多項式
+** 頂点の座標
+F-座標系では、12個の頂点 [tex:{P_1,\cdots,P_{12}}]は下図Fig.1のように配置される。
+
+<figure style="margin:0 auto;">
+<div style="width:80%;margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/icosahedron-center-of-face-to-infinity.svg?raw=True"/>
+</div>
+<figcaption><b>Figure 1.</b>　F-座標系に置かれた正20面体。それぞれ、[tex:{+x}]方向（左上）、[tex:{+y}]方向（右上）、[tex:{+z}]方向（左下）から見た図。</figcaption>
+</figure>
+
+球面三角形 [tex:{P_1P_2P_3}] （Fig.1中で水色に塗られている）の中心は [tex:{z}] 軸上にある。この点 [tex:{G}] と [tex:{P_1}]に対して、[tex:{\vec{OG}}] と [tex:{\vec{OP_1}}] のなす角を [tex:{\theta_2,\,(0<\theta_2<\pi/2)}] とする（Fig.2）。なお、角 [tex:{\theta_1, \theta'_1}] は前回の定義を踏襲する。
+
+<figure style="margin:0 auto;">
+<div style="width:80%;margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/spherical-equilateral-triangle.svg?raw=True"/>
+</div>
+<figcaption><b>Figure 2.</b>　正20面体の面一つに対応する球面三角形。</figcaption>
+</figure>
+
+[tex:{\theta_2}] の値を知るには、一旦前回の E-座標系に戻って考えるのが便利。E-座標系では [tex:{ P_1=(\cos\theta_1, \sin\theta_1, 0) }]、[tex:{C=(1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})}] だから、内積を取ると
+\begin{align}
+    \cos\theta_2 &= \vec{OP_1}\cdot \vec{OC} \\
+    &=\cos\theta_1\cdot \frac{1}{\sqrt{3}} 
+    + \sin\theta_1\cdot \frac{1}{\sqrt{3}}
+    + 0\cdot \frac{1}{\sqrt{3}}\\
+    &=\frac{1+\phi}{\sqrt{3(1+\phi^2)}}\\
+    &=3^{-\frac{1}{2}}\cdot 5^{-\frac{1}{4}}\phi^{\frac{3}{2}}
+\end{align}
+を得る。[tex:{\sin, \tan}] については、
+\begin{align}
+    \sin\theta_2
+    &=\frac{2}{\sqrt{3(1+\phi^2)}}
+    =2\cdot 3^{-\frac{1}{2}}\cdot 5^{-\frac{1}{4}}\phi^{-\frac{1}{2}},\\
+    \tan\theta_2&=\frac{2}{1+\phi}=2\,\phi^{-2}=3-\sqrt{5}.
+\end{align}
+
+FIg.1, 2から、[tex:{\vec{OP_5}}] と [tex:{\vec{OC}}] のなす角は [tex:{\theta_1+\theta_2}] であることが読み取れる。こちらは加法公式から、
+\begin{align}
+    \cos(\theta_1+\theta_2)
+    &=\frac{\phi-3}{\sqrt{15(1+\phi^2)}}
+    =\frac{-\phi^{-1}}{\sqrt{3(1+\phi^2)}}
+    =-3^{-\frac{1}{2}}5^{-\frac{1}{4}}\phi^{-\frac{3}{2}},\\
+    \sin(\theta_1+\theta_2)
+    &=\frac{4+2\phi}{\sqrt{15(1+\phi^2)}}
+    =\frac{2\phi}{\sqrt{3(1+\phi^2)}}
+    =2\cdot3^{-\frac{1}{2}}\cdot5^{-\frac{1}{4}}\phi^{\frac{1}{2}},\\
+    \tan(\theta_1+\theta_2)
+    &=-2\phi^2
+    =-3-\sqrt{5}.
+\end{align}
+
+この2つの角を使って書くと、頂点の座標は以下のように列挙される。
+\begin{alignat}{4}
+    P_1 &= \Big(
+        &\sin\theta_2&,\,
+        &0&,\,
+        &\cos\theta_2&
+    \Big),\\
+    P_2 &= \Big(
+        &\sin\theta_2\cos\frac{2\pi}{3}&,\, 
+        &\sin\theta_2\sin\frac{2\pi}{3}&,\,
+        &\cos\theta_2&
+    \Big),\\
+    P_3 &= \Big(
+        &\sin\theta_2\cos\frac{4\pi}{3}&,\,
+        &\sin\theta_2\sin\frac{4\pi}{3}&,\,
+        &\cos\theta_2&
+    \Big),\\
+    P_8 &= \Big(
+        &\sin(\pi-\theta_1-\theta_2)&,\,
+        &0&,\,
+        &\cos(\pi-\theta_1-\theta_2)&
+    \Big),\\
+    P_4 &= \Big(
+        &\sin(\pi-\theta_1-\theta_2)\cos\frac{5\pi}{3}&,\, 
+        &\sin(\pi-\theta_1-\theta_2)\sin\frac{5\pi}{3}&,\,
+        &\cos(\pi-\theta_1-\theta_2)&
+    \Big),\\
+    P_6 &= \Big(
+        &\sin(\pi-\theta_1-\theta_2)\cos\frac{\pi}{3}&,\,
+        &\sin(\pi-\theta_1-\theta_2)\sin\frac{\pi}{3}&,\,
+        &\cos(\pi-\theta_1-\theta_2)&
+    \Big),\\
+    P_5 &= \Big(
+        &\sin(\theta_1+\theta_2)&,\,
+        &0&,\,
+        &\cos(\theta_1+\theta_2)&
+    \Big),\\
+    P_9 &= \Big(
+        &\sin(\theta_1+\theta_2)\cos\frac{2\pi}{3}&,\, 
+        &\sin(\theta_1+\theta_2)\sin\frac{2\pi}{3}&,\,
+        &\cos(\theta_1+\theta_2)&
+    \Big),\\
+    P_7 &= \Big(
+        &\sin(\theta_1+\theta_2)\cos\frac{4\pi}{3}&,\,
+        &\sin(\theta_1+\theta_2)\sin\frac{4\pi}{3}&,\,
+        &\cos(\theta_1+\theta_2)&
+    \Big),\\
+    P_{12} &= \Big(
+        &\sin(\pi-\theta_2)&,\,
+        &0&,\,
+        &\cos(\pi-\theta_2)&
+    \Big),\\
+    P_{11} &= \Big(
+        &\sin(\pi-\theta_2)\cos\frac{5\pi}{3}&,\, 
+        &\sin(\pi-\theta_2)\sin\frac{5\pi}{3}&,\,
+        &\cos(\pi-\theta_2)&
+    \Big),\\
+    P_{10} &= \Big(
+        &\sin(\pi-\theta_2)\cos\frac{\pi}{3}&,\,
+        &\sin(\pi-\theta_2)\sin\frac{\pi}{3}&,\,
+        &\cos(\pi-\theta_2)&
+\Big)
+\end{alignat}
+[tex:{\triangle P_1P_2P_3,\, \triangle P_8P_4P_6,\, \triangle P_5P_9P_7,\, \triangle P_{12}P_{11}P_{10}}]がそれぞれ[tex:{z}]軸方向の法線を共有するためこの順に並べた。また、[tex:{1\leq i\leq 6}] で [tex:{P_{i} = -P_{13-i}}] となっている。まとめて書くと、[tex:{k=0,\,1,\,2}] として、
+\begin{gather}
+    \pm\left(
+    \sin\theta_2\cos \frac{2k\pi}{3},\,
+    \sin\theta_2\sin \frac{2k\pi}{3},\,
+    \cos\theta_2
+    \right),\\
+    \pm\left(
+    \sin(\theta_1+\theta_2)\cos \frac{2k\pi}{3},\,
+    \sin(\theta_1+\theta_2)\sin \frac{2k\pi}{3},\,
+    \cos(\theta_1+\theta_2)
+    \right)
+\end{gather}
+である。
+
+** 立体射影
+単位球面 [tex:{S^2}] 上の点が [tex:{(\alpha, \beta)\in\lbrack0,\,\pi\rbrack\times \lbrack 0,2\pi)}]によって
+\begin{align}
+    x &= \cos\alpha\sin\beta,&
+    y &= \sin\alpha\sin\beta,&
+    z &= \cos\beta
+\end{align}
+と表される（極座標）とすると、立体射影 [tex:{\varphi:S^2\rightarrow \mathbb{C}\cup \{\infty\}}]は
+\begin{align}
+    \varphi:(x,\,y,\,z) \mapsto 
+    \left\{
+    \begin{aligned}
+    &\infty & (x,y,z) = (0,0,-1),\\
+    &\frac{x+yi}{1+z} = \tan\frac{\beta}{2}e^{i\alpha} & \mbox{otherwise.}\\
+    \end{aligned}
+    \right.
+\end{align}
+と表せる。立体射影による頂点たちの像を [tex:{\zeta_i:=\varphi(P_i)}] とすると、
+\begin{align}
+    t&:=\tan\frac{\theta_2}{2},&
+    u&:=\tan\frac{\theta_1+\theta_2}{2},&
+    \omega&:=e^{2\pi i/3}
+\end{align}
+によって、
+\begin{align}
+ \zeta_1   &=t,
+&\zeta_2   &=t\omega,
+&\zeta_3   &=t\omega^2,\\
+ \zeta_8   &=-u^{-1},
+&\zeta_4   &=-u^{-1}\omega,
+&\zeta_6   &=-u^{-1}\omega^2,\\
+ \zeta_5   &=u,
+&\zeta_9   &=u\omega,
+&\zeta_7   &=u\omega^2,\\
+ \zeta_{12}&=-t^{-1},
+&\zeta_{11}&=-t^{-1}\omega,
+&\zeta_{10}&=-t^{-1}\omega^2
+\end{align}
+と表せる。これらを根に持つモニック多項式 [tex:{F_{12}(X)}] を計算する。予備的な計算として以下を与える（『正多面体と素数』p.131）。
+\begin{align}
+    t-t^{-1} 
+    &= -2(\tan\theta_2)^{-1}=-\phi^2=\frac{-3-\sqrt{5}}{2},\\
+    t^3-t^{-3}
+    &= (t-t^{-1})^3 + 3(t-t^{-1})\\
+    &= -\phi^6-3\,\phi^2= -8\phi-5-3(\phi+1)\\
+    &=-11\phi-8=\frac{-27-11\sqrt{5}}{2},\\
+    u-u^{-1}
+    &=-2(\tan(\theta_1+\theta_2))^{-1}
+    =\phi^{-2}
+    =\frac{3-\sqrt{5}}{2}\\
+    u^3-u^{-3}
+    &=(u-u^{-1})^3+3(u-u^{-1})\\
+    &=\phi^{-6}+3\,\phi^{-2}=(-8\phi+13)+3(-\phi+2)\\
+    &=-11\phi+19=\frac{27-11\sqrt{5}}{2},\\
+    \left(t^3-t^{-3}\right)+\left(u^3-u^{-3}\right)
+    &=-11\sqrt{5},\\
+    \left(t^3-t^{-3}\right)\left(u^3-u^{-3}\right)
+    &=-31
+\end{align}
+これによって、
+\begin{align}
+F_{12}(X)
+    &=\prod_{i=1}^{12}(X-\zeta_i)\\
+    &=(X^3-t^3)(X^3+t^{-3})(X^3-u^3)(X^3+u^{-3})\\
+    &=(X^6-(t^3-t^{-3})X^3-1)(X^6-(u^3-u^{-3})X^3-1)\\
+    &=X^{12}+11\sqrt{5}X^{9}-33X^{6}-11\sqrt{5}X^3+1
+\end{align}
+を得る。『正多面体と素数』p.132の [tex:{F_{R}^{\{0\}}(X)}] に対応する。あとは上の手順で高次の正20面体多項式を計算していくだけだ。
+
+* 正20面体多項式
+** 12次
+\begin{align}
+    F_{12}(x,y)
+    =&x^{12} + y^{12}
+    \\&+11\sqrt{5}\left(x^{9}y^{3} - x^{3}y^{9}\right)
+    \\&-3 \!\cdot\! 11x^{6}y^{6}
+\end{align}
+中間項の係数には [tex:{12-1=11}] が現れている。
+
+** 20次
+\begin{align}
+    F_{20}(x,y)
+    =&x^{19}y - xy^{19}
+    \\&-\frac{3 \!\cdot\! 19\sqrt{5}}{2^3} \left(x^{16}y^{4} + x^{4}y^{16}\right)
+    \\&-\frac{3 \!\cdot\! 19}{2} \left(x^{13}y^{7} - x^{7}y^{13}\right)
+    \\&-\frac{13 \!\cdot\! 19\sqrt{5}}{2^2} x^{10}y^{10}
+\end{align}
+中間項の係数には [tex:{20-1=19}] が現れている。[tex:{F_{20}(X,1)=0}] の19個の根と [tex:{\infty}] は、20個の面の中心の立体射影に一致する。
+
+** 30次
+\begin{align}
+    F_{30}(x,y)
+    =&x^{30} + y^{30}
+    \\&-\frac{5 \!\cdot\! 29\sqrt{5}}{2} \left(x^{27}y^{3} - x^{3}y^{27}\right)
+    \\&+\frac{3^3 \!\cdot\! 5 \!\cdot\! 29}{2^3} \left(x^{24}y^{6} + x^{6}y^{24}\right)
+    \\&-\frac{3 \!\cdot\! 5 \!\cdot\! 23 \!\cdot\! 29\sqrt{5}}{2^2} \left(x^{21}y^{9} - x^{9}y^{21}\right)
+    \\&-\frac{3 \!\cdot\! 5 \!\cdot\! 19 \!\cdot\! 23 \!\cdot\! 29}{2^3} \left(x^{18}y^{12} + x^{12}y^{18}\right)
+\end{align}
+中間項の係数には [tex:{30-1=29}] が現れている。[tex:{F_{30}(X,1)=0}] の30個の根は、30個の辺の中点の立体射影に一致する。
+
+[tex:{F_{12},\, F_{20},\, F_{30}}] との間には、
+\begin{align}
+F_{12}^5 - F_{30}^2+200\sqrt{5}\,F_{20}^3=0
+\end{align}
+の関係がある。
+
+** 32次
+\begin{align}
+    F_{32}(x,y)
+    =&F_{12}(x,y)F_{20}(x,y)\\
+    =&x^{31}y - xy^{31}
+    \\&+\frac{31\sqrt{5}}{2^3} \left(x^{28}y^{4} + x^{4}y^{28}\right)
+    \\&-\frac{3^2 \!\cdot\! 13 \!\cdot\! 31}{2^3} \left(x^{25}y^{7} - x^{7}y^{25}\right)
+    \\&-\frac{3 \!\cdot\! 13 \!\cdot\! 31\sqrt{5}}{2^3} \left(x^{22}y^{10} + x^{10}y^{22}\right)
+    \\&-\frac{3 \!\cdot\! 5^2 \!\cdot\! 7 \!\cdot\! 31}{2^3} \left(x^{19}y^{13} - x^{13}y^{19}\right)
+    \\&+\frac{3^2 \!\cdot\! 19 \!\cdot\! 31\sqrt{5}}{2} x^{16}y^{16}
+\end{align}
+中間項の係数には [tex:{32-1=31}] が現れている。
+
+** 42次
+\begin{align}
+    F_{42}(x,y)
+    =&F_{12}(x,y)F_{30}(x,y)\\
+    =&x^{42} + y^{42}
+\\&-\frac{3 \!\cdot\! 41\sqrt{5}}{2} \left(x^{39}y^{3} - x^{3}y^{39}\right)
+\\&-\frac{13 \!\cdot\! 41 \!\cdot\! 53}{2^3} \left(x^{36}y^{6} + x^{6}y^{36}\right)
+\\&+\frac{13 \!\cdot\! 41 \!\cdot\! 79\sqrt{5}}{2^3} \left(x^{33}y^{9} - x^{9}y^{33}\right)
+\\&-\frac{3 \!\cdot\! 7 \!\cdot\! 13 \!\cdot\! 31 \!\cdot\! 41}{2} \left(x^{30}y^{12} + x^{12}y^{30}\right)
+\\&-5 \!\cdot\! 29 \!\cdot\! 31 \!\cdot\! 41\sqrt{5}\left(x^{27}y^{15} - x^{15}y^{27}\right)
+\\&+\frac{3 \!\cdot\! 5 \!\cdot\! 13 \!\cdot\! 29 \!\cdot\! 31 \!\cdot\! 41}{2^3} \left(x^{24}y^{18} + x^{18}y^{24}\right)
+\end{align}
+中間項の係数には [tex:{42-1=41}] が現れている。
+
+** 50次
+\begin{align}
+    F_{50}(x,y)
+    =&F_{12}(x,y)F_{20}(x,y)F_{50}(x,y)\\
+    =&x^{49}y - xy^{49}
+    \\&-\frac{7^2 \!\cdot\! 13\sqrt{5}}{2^3} \left(x^{46}y^{4} + x^{4}y^{46}\right)
+    \\&+\frac{3^2 \!\cdot\! 7 \!\cdot\! 773}{2^4} \left(x^{43}y^{7} - x^{7}y^{43}\right)
+    \\&-\frac{7^2 \!\cdot\! 11^2 \!\cdot\! 43\sqrt{5}}{2^6} \left(x^{40}y^{10} + x^{10}y^{40}\right)
+    \\&+\frac{7^2 \!\cdot\! 19 \!\cdot\! 43 \!\cdot\! 59}{2^5} \left(x^{37}y^{13} - x^{13}y^{37}\right)
+    \\&+\frac{3^2 \!\cdot\! 7^2 \!\cdot\! 19 \!\cdot\! 37 \!\cdot\! 43\sqrt{5}}{2^6} \left(x^{34}y^{16} + x^{16}y^{34}\right)
+    \\&+\frac{7^2 \!\cdot\! 37^2 \!\cdot\! 43}{2} \left(x^{31}y^{19} - x^{19}y^{31}\right)
+    \\&+\frac{5 \!\cdot\! 7 \!\cdot\! 29 \!\cdot\! 31 \!\cdot\! 37 \!\cdot\! 43\sqrt{5}}{2^5} \left(x^{28}y^{22} + x^{22}y^{28}\right)
+\end{align}
+中間項の係数には、
+[tex:{x^{43}y^{7},\, x^{28}y^{22},\, x^{22}y^{28},\,x^7y^{43}  }] を除いて [tex:{50-1=49=7^2}] が現れている。除いた4項の係数には [tex:{7^1}] までが現れる。
+
+** 62次
+\begin{align}
+F_{62}(x,y)=&F_{12}(x,y)\\
+=&x^{61}y - xy^{61}
+\\&-\frac{3^2 \!\cdot\! 61\sqrt{5}}{2^3} \left(x^{58}y^{4} + x^{4}y^{58}\right)
+\\&-\frac{61 \!\cdot\! 359}{2^4} \left(x^{55}y^{7} - x^{7}y^{55}\right)
+\\&+\frac{3 \!\cdot\! 11 \!\cdot\! 61 \!\cdot\! 1021\sqrt{5}}{2^6} \left(x^{52}y^{10} + x^{10}y^{52}\right)
+\\&-\frac{3^2 \!\cdot\! 5 \!\cdot\! 17 \!\cdot\! 61 \!\cdot\! 331}{2^6} \left(x^{49}y^{13} - x^{13}y^{49}\right)
+\\&+\frac{3 \!\cdot\! 7 \!\cdot\! 17 \!\cdot\! 31 \!\cdot\! 53 \!\cdot\! 61\sqrt{5}}{2^5} \left(x^{46}y^{16} + x^{16}y^{46}\right)
+\\&+\frac{3 \!\cdot\! 5 \!\cdot\! 7 \!\cdot\! 11 \!\cdot\! 23 \!\cdot\! 61 \!\cdot\! 211}{2^5} \left(x^{43}y^{19} - x^{19}y^{43}\right)
+\\&+\frac{3^2 \!\cdot\! 7 \!\cdot\! 23 \!\cdot\! 41 \!\cdot\! 43 \!\cdot\! 61\sqrt{5}}{2^4} \left(x^{40}y^{22} + x^{22}y^{40}\right)
+\\&+\frac{3 \!\cdot\! 7 \!\cdot\! 13 \!\cdot\! 41 \!\cdot\! 43 \!\cdot\! 59 \!\cdot\! 61}{2^6} \left(x^{37}y^{25} - x^{25}y^{37}\right)
+\\&-\frac{7 \!\cdot\! 37 \!\cdot\! 41 \!\cdot\! 43 \!\cdot\! 61 \!\cdot\! 151\sqrt{5}}{2^6} \left(x^{34}y^{28} + x^{28}y^{34}\right)
+\end{align}
+中間項の係数には [tex:{62-1=61}] が現れている。
+
+* 球面調和関数
+<a href="https://shironetsu.hatenadiary.com/entry/2021/05/05/102317#%E7%90%83%E9%9D%A2%E8%AA%BF%E5%92%8C%E9%96%A2%E6%95%B0">前回</a>と同じ手続きで球面上の正20面体対称な関数を視覚化する。
+\begin{align}
+    \mathcal{F}_{12}(\theta,\varphi)
+    =&+\sqrt{\frac{2^{2} \!\cdot\! 7}{3^{5}}}\left(Y^{6}_{6} + Y^{6}_{-6}\right)
+    \\&-\sqrt{\frac{7 \!\cdot\! 11}{3^{5}}}\left(Y^{6}_{3} - Y^{6}_{-3}\right)
+    \\&-\sqrt{\frac{11}{3^{4}}}Y^{6}_{0}\\
+    \mathcal{F}_{20}(\theta,\varphi)
+    =&-\sqrt{\frac{2^{4} \!\cdot\! 11 \!\cdot\! 17}{3^{9}}}\left(Y^{10}_{9} - Y^{10}_{-9}\right)
+    \\&-\sqrt{\frac{5 \!\cdot\! 11 \!\cdot\! 19}{3^{8}}}\left(Y^{10}_{6} + Y^{10}_{-6}\right)
+    \\&+\sqrt{\frac{11 \!\cdot\! 19}{3^{8}}}\left(Y^{10}_{3} - Y^{10}_{-3}\right)
+    \\&-\sqrt{\frac{5^{2} \!\cdot\! 13 \!\cdot\! 19}{3^{9}}}Y^{10}_{0}\\
+    \mathcal{F}_{30}(\theta,\varphi)
+    =&\sqrt{\frac{2^{4} \!\cdot\! 7 \!\cdot\! 11 \!\cdot\! 13}{3^{12}}}\left(Y^{15}_{15} + Y^{15}_{-15}\right)
+    \\&+\sqrt{\frac{5^{2} \!\cdot\! 11 \!\cdot\! 13 \!\cdot\! 29}{3^{12}}}\left(Y^{15}_{12} - Y^{15}_{-12}\right)
+    \\&+\sqrt{\frac{11 \!\cdot\! 29}{2^{2} \!\cdot\! 3^{8}}}\left(Y^{15}_{9} + Y^{15}_{-9}\right)
+    \\&+\sqrt{\frac{5 \!\cdot\! 7 \!\cdot\! 23 \!\cdot\! 29}{2 \!\cdot\! 3^{11}}}\left(Y^{15}_{6} - Y^{15}_{-6}\right)
+    \\&-\sqrt{\frac{11 \!\cdot\! 19 \!\cdot\! 23 \!\cdot\! 29}{2^{2} \!\cdot\! 3^{11}}}\left(Y^{15}_{3} + Y^{15}_{-3}\right)
+\end{align}
+
+[tex:{\mathcal{F}_{30}}] のみ純虚の値をとるため虚部を取る。
+
+<div style="display:flex;flex-flow:row nowrap; justify-content:space-around;">
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12-f.gif?raw=true"/> 
+</figure>
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20-f.gif?raw=true"/> 
+</figure>
+<figure style="width:80%; margin:0 auto;">
+<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30-f.gif?raw=true"/> 
+</figure>
+</div>
+<b>Fig 3.</b>　左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30}}]を適当に規格化して球面上に描画して回転させている。なお、[tex:{\mathcal{F}_{20}}] は前回と比較すると色調が反転している。これは「係数が実数になるように規格化する」という条件に正負の自由度があることによる。
+
+前回と同じ形状の模様が出現しているが、回転軸=[tex:{z}] 軸が3回対称軸になっている。前回は2回対称軸だった。正20面体の中心と面の中心を結ぶ直線は3回対称軸、辺の中点を結ぶ直線は2回対称軸になるという事実に整合する。
+
+なお見ての通り12次、20次がパリティー偶、30次がパリティー奇である。構成する球面調和関数の右肩の数字の偶奇に一致する。
+
+実はここにもはっきりしていない現象がある。規格化込みで係数がこんなにきれいな形になる理由が説明できていない。おそらく糸口は規格化定数の積分表現にあり、これはまた別の機会に調べたい。
+
+今回はここまで。
+
+今回の計算に使ったノート（計算用紙的な書き散らし）は以下のsagemath notebookとして上げています。
+
+[https://github.com/shironetsu/icosahedron/blob/main/platonic-solids-and-prime-numbers-10-02-03.ipynb:embed:cite]
