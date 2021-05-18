@@ -516,13 +516,13 @@ F_{12}^5 - F_{20}^3+60\sqrt{5}\,F_{30}^2=0
 
 <div style="display:flex;flex-flow:row nowrap; justify-content:space-around;">
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-12.gif?raw=true"/> 
 </figure>
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-20.gif?raw=true"/> 
 </figure>
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-30.gif?raw=true"/> 
 </figure>
 </div>
 <b>Fig 4.</b>　左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30}}]を適当に規格化して球面上に描画して回転させている。

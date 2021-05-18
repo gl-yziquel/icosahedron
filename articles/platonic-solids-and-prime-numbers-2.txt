@@ -347,13 +347,13 @@ F_{62}(x,y)=&F_{12}(x,y)\\
 
 <div style="display:flex;flex-flow:row nowrap; justify-content:space-around;">
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12-f.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-12-f.gif?raw=true"/> 
 </figure>
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20-f.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-20-f.gif?raw=true"/> 
 </figure>
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30-f.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-30-f.gif?raw=true"/> 
 </figure>
 </div>
 <b>Fig 3.</b>　左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30}}]を適当に規格化して球面上に描画して回転させている。なお、[tex:{\mathcal{F}_{20}}] は前回と比較すると色調が反転している。これは「係数が実数になるように規格化する」という条件に正負の自由度があることによる。

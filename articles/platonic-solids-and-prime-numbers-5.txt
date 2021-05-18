@@ -252,7 +252,7 @@ True
 
 <div style="width:100%; margin: 0 auto;">
 <figure style="width:80%; margin:0 auto;">
-<img src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12x5-v.gif?raw=true"/> 
+<img src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-12x5-v.gif?raw=true"/> 
 </figure>
 <figcaption>Figure 2. アイキャッチ画像用の [tex:{V_{12}^5}] に対応する球面上の関数。</figcaption>
 </div>

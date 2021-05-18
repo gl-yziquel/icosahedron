@@ -295,13 +295,13 @@ f=z_1z_2\left(z_1^{10} + 11z_1^5z_2^5 - z_2^{10}\right)
 \end{align}
 
 <div style="display:flex;width:800px;flex-flow:row wrap; justify-content:center;margin:0 auto;">
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-12-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-20-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-30-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-32-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-42-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-50-v.gif?raw=true"/> 
-<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/rotating-icosahedron-deg-62-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-12-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-20-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-30-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-32-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-42-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-50-v.gif?raw=true"/> 
+<img style="width:200px;" src="https://github.com/shironetsu/icosahedron/blob/main/animations/rotating-icosahedron-deg-62-v.gif?raw=true"/> 
 </div>
 <b>Figure 3.</b>　（上列）左から順に[tex:{\mathcal{F}_{12},\,\mathcal{F}_{20},\,\mathcal{F}_{30},\,\mathcal{F}_{32}}]。（下列）左から順に[tex:{\mathcal{F}_{42},\,\mathcal{F}_{50},\,\mathcal{F}_{62}}]。いずれも5回対称軸まわりに等速回転させている。
 
