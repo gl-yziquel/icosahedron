@@ -31,7 +31,7 @@
 - [ENCOUNTER with MATHEMATICS 数学との遭遇 第３６回　正２０面体にまつわる数学](https://www.math.chuo-u.ac.jp/ENCwMATH/36.shtml)
 - [ENCOUNTER with MATHEMATICS 数学との遭遇 第５１回　正２０面体にまつわる数学～その２～　案内](https://www.math.chuo-u.ac.jp/ENCwMATH/ewm51.pdf)
 - [関口次郎「正20面体群からの旅たち」](https://www.math.chuo-u.ac.jp/ENCwMATH/51/ewm51_Sekiguchi1.pdf)
-- [関口次郎「クラインとポアンカレの往復書簡について―保形関数論の源流」](https://www2.tsuda.ac.jp/suukeiken/math/suugakushi/sympo14/14_4sekiguchi.pdf)
+- [関口次郎「クラインとポアンカレの往復書簡について―保形関数論の源流」](https://web.archive.org/web/20230404150427/https://www2.tsuda.ac.jp/suukeiken/math/suugakushi/sympo14/14_4sekiguchi.pdf)
 - [\[1308\.0955\] On Klein's Icosahedral Solution of the Quintic](https://arxiv.org/abs/1308.0955)
 - [On Klein's icosahedral solution of the quintic](http://olivernash.org/2012/02/05/on-kleins-icosahedral-solution-of-the-quintic/index.html)
 
